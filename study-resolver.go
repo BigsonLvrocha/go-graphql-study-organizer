@@ -23,11 +23,13 @@ func (s *StudyResolver) SuccessDefinition(ctx context.Context) *string {
 }
 
 func (s *StudyResolver) LearningPath(ctx context.Context) *[]*LearningTopicResolver {
-	data := make([]*LearningTopicResolver, 0)
+	data := make([]*LearningTopicResolver, 1)
+	data[0] = &LearningTopicResolver{}
 	return &data
 }
 
 func (s *StudyResolver) References(ctx context.Context) *[]*ReferenceResolver {
-	data := make([]*ReferenceResolver, 0)
+	data := make([]*ReferenceResolver, 1)
+	data[0] = &ReferenceResolver{}
 	return &data
 }
