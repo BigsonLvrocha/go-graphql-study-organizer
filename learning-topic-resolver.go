@@ -6,17 +6,18 @@ import (
 	"github.com/graph-gophers/graphql-go"
 )
 
-type LearningTopicResolver struct{}
+type LearningTopicResolver struct {
+	model LearningTopic
+}
 
-func (r *LearningTopicResolver) Id(ctx context.Context) *graphql.ID {
-	return gqlIDP(1)
+func (r *LearningTopicResolver) ID(ctx context.Context) *graphql.ID {
+	return gqlIDP(r.model.ID)
 }
 
 func (r *LearningTopicResolver) Order(ctx context.Context) int32 {
-	return 1
+	return r.model.Order
 }
 
 func (r *LearningTopicResolver) Description(ctx context.Context) *string {
-	data := "stub description"
-	return &data
+	return &r.model.Description
 }
