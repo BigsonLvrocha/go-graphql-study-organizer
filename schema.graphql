@@ -1,0 +1,36 @@
+type Query {
+    getStudy(id: Int)
+}
+
+type Mutation {
+    addStudy(study: StudyInput!): Study
+}
+
+type Study {
+    id: ID
+    scopeDefinition: String
+    successDefinition: String
+    learningPath: [LearningTopic]
+    references: [Reference]
+}
+
+type LeaningTopic {
+    id: ID
+    order: Int!
+    description: String
+}
+
+type Reference {
+    url: String
+    category: ReferenceCategory
+}
+
+type ReferenceCategory {
+    id: ID
+    name: String
+}
+
+type StudyInput {
+    scopeDefinition: String!
+    successDefinition: String!
+}
