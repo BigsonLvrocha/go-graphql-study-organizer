@@ -20,7 +20,8 @@ func (r *Resolver) GetStudy(ctx context.Context, args struct{ ID graphql.ID }) (
 		return nil, err
 	}
 	s := StudyResolver{
-		model: study,
+		model: *study,
+		db:    r.db,
 	}
 	return &s, nil
 }
