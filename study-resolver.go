@@ -6,20 +6,20 @@ import (
 	graphql "github.com/graph-gophers/graphql-go"
 )
 
-type StudyResolver struct{}
+type StudyResolver struct {
+	model *Study
+}
 
 func (s *StudyResolver) Id(ctx context.Context) *graphql.ID {
 	return gqlIDP(1)
 }
 
 func (s *StudyResolver) ScopeDefinition(ctx context.Context) *string {
-	data := "stub definition"
-	return &data
+	return &s.model.ScopeDefinition
 }
 
 func (s *StudyResolver) SuccessDefinition(ctx context.Context) *string {
-	data := "stub success"
-	return &data
+	return &s.model.SuccessDefinition
 }
 
 func (s *StudyResolver) LearningPath(ctx context.Context) *[]*LearningTopicResolver {

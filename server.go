@@ -15,7 +15,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	schema := graphql.MustParseSchema(s, &Resolver{})
+	db, err := NewDb("./db.sqlite")
+	if err != nil {
+		panic(err)
+	}
+	schema := graphql.MustParseSchema(s, &Resolver{db})
 	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Write(page)
 	}))
