@@ -2,10 +2,6 @@ type Query {
     getStudy(id: Int)
 }
 
-type Mutation {
-    addStudy(study: StudyInput!): Study
-}
-
 type Study {
     id: ID
     scopeDefinition: String
@@ -28,9 +24,4 @@ type Reference {
 type ReferenceCategory {
     id: ID
     name: String
-}
-
-type StudyInput {
-    scopeDefinition: String!
-    successDefinition: String!
 }
