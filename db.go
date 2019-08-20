@@ -14,9 +14,14 @@ func NewDb(path string) (*DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	db.DropTableIfExists(&Study{})
-	db.AutoMigrate(&Study{})
+	db.DropTableIfExists(&Study{}, &LearningTopic{})
+	db.AutoMigrate(&Study{}, &LearningTopic{})
 	for _, v := range studies {
+		if err := db.Create(&v).Error; err != nil {
+			return nil, err
+		}
+	}
+	for _, v := range learningTopics {
 		if err := db.Create(&v).Error; err != nil {
 			return nil, err
 		}
@@ -28,5 +33,23 @@ var studies = []Study{
 	Study{
 		ScopeDefinition:   "Aprender graphql em go",
 		SuccessDefinition: "Consigo implementar uma interface graphql em um servidor desenvolvido em go",
+	},
+}
+
+var learningTopics = []LearningTopic{
+	LearningTopic{
+		StudyID:     1,
+		Order:       1,
+		Description: "Aprender o básico da sintaxe do go",
+	},
+	LearningTopic{
+		StudyID:     1,
+		Order:       2,
+		Description: "Aprender a usar Go routines",
+	},
+	LearningTopic{
+		StudyID:     1,
+		Order:       3,
+		Description: "Aprender a utilizar o gerenciamento de dependências",
 	},
 }
