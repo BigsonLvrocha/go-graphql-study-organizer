@@ -14,7 +14,7 @@ type Study {
     references: [Reference]
 }
 
-type LeaningTopic {
+type LearningTopic {
     id: ID
     order: Int!
     description: String
