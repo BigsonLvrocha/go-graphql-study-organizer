@@ -6,13 +6,14 @@ import (
 	graphql "github.com/graph-gophers/graphql-go"
 )
 
-type ReferenceCategoryResolver struct{}
+type ReferenceCategoryResolver struct {
+	model ReferenceCategory
+}
 
-func (r *ReferenceCategoryResolver) Id(ctx context.Context) *graphql.ID {
-	return gqlIDP(1)
+func (r *ReferenceCategoryResolver) ID(ctx context.Context) *graphql.ID {
+	return gqlIDP(r.model.ID)
 }
 
 func (r *ReferenceCategoryResolver) Name(ctx context.Context) *string {
-	data := "stub category"
-	return &data
+	return &r.model.Name
 }
