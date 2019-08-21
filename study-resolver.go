@@ -12,7 +12,7 @@ type StudyResolver struct {
 }
 
 func (s *StudyResolver) Id(ctx context.Context) *graphql.ID {
-	return gqlIDP(1)
+	return gqlIDP(s.model.ID)
 }
 
 func (s *StudyResolver) ScopeDefinition(ctx context.Context) *string {
@@ -46,6 +46,7 @@ func (s *StudyResolver) References(ctx context.Context) (*[]*ReferenceResolver, 
 	for i, v := range refs {
 		data[i] = &ReferenceResolver{
 			model: v,
+			db:    s.db,
 		}
 	}
 	return &data, nil
