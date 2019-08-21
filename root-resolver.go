@@ -10,6 +10,11 @@ type Resolver struct {
 	db *DB
 }
 
+type StudyInput struct {
+	ScopeDefinition   string
+	SuccessDefinition string
+}
+
 func (r *Resolver) GetStudy(ctx context.Context, args struct{ ID graphql.ID }) (*StudyResolver, error) {
 	id, err := gqlIDToUint(args.ID)
 	if err != nil {
@@ -24,4 +29,15 @@ func (r *Resolver) GetStudy(ctx context.Context, args struct{ ID graphql.ID }) (
 		db:    r.db,
 	}
 	return &s, nil
+}
+
+func (r *Resolver) AddStudy(ctx context.Context, args struct{ Study StudyInput }) (*StudyResolver, error) {
+	study, err := r.db.addStudy(ctx, args.Study)
+	if err != nil {
+		return nil, err
+	}
+	return &StudyResolver{
+		model: *study,
+		db:    r.db,
+	}, nil
 }

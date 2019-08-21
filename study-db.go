@@ -46,3 +46,15 @@ func (db *DB) getStudyReferences(ctx context.Context, studyID uint) ([]Reference
 	}
 	return refs, nil
 }
+
+func (db *DB) addStudy(ctx context.Context, study StudyInput) (*Study, error) {
+	newStudy := Study{
+		ScopeDefinition:   study.ScopeDefinition,
+		SuccessDefinition: study.SuccessDefinition,
+	}
+	err := db.db.Create(&newStudy).Error
+	if err != nil {
+		return nil, err
+	}
+	return &newStudy, nil
+}

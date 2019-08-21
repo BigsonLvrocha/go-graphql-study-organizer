@@ -1,9 +1,14 @@
 schema { 
     query: Query 
+    mutation: Mutation
 }
 
 type Query {
     getStudy(id: ID!): Study
+}
+
+type Mutation {
+    addStudy(study: StudyInput!): Study
 }
 
 type Study {
@@ -28,4 +33,9 @@ type Reference {
 type ReferenceCategory {
     id: ID
     name: String
+}
+
+input StudyInput {
+    scopeDefinition: String!
+    successDefinition: String!
 }
