@@ -37,8 +37,16 @@ func (s *StudyResolver) LearningPath(ctx context.Context) (*[]*LearningTopicReso
 	return &data, nil
 }
 
-func (s *StudyResolver) References(ctx context.Context) *[]*ReferenceResolver {
-	data := make([]*ReferenceResolver, 1)
-	data[0] = &ReferenceResolver{}
-	return &data
+func (s *StudyResolver) References(ctx context.Context) (*[]*ReferenceResolver, error) {
+	refs, err := s.db.getStudyReferences(ctx, s.model.ID)
+	if err != nil {
+		return nil, err
+	}
+	data := make([]*ReferenceResolver, len(refs))
+	for i, v := range refs {
+		data[i] = &ReferenceResolver{
+			model: v,
+		}
+	}
+	return &data, nil
 }
