@@ -14,14 +14,19 @@ func NewDb(path string) (*DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	db.DropTableIfExists(&Study{}, &LearningTopic{})
-	db.AutoMigrate(&Study{}, &LearningTopic{})
+	db.DropTableIfExists(&Study{}, &LearningTopic{}, &Reference{})
+	db.AutoMigrate(&Study{}, &LearningTopic{}, &Reference{})
 	for _, v := range studies {
 		if err := db.Create(&v).Error; err != nil {
 			return nil, err
 		}
 	}
 	for _, v := range learningTopics {
+		if err := db.Create(&v).Error; err != nil {
+			return nil, err
+		}
+	}
+	for _, v := range references {
 		if err := db.Create(&v).Error; err != nil {
 			return nil, err
 		}
@@ -51,5 +56,16 @@ var learningTopics = []LearningTopic{
 		StudyID:     1,
 		Order:       3,
 		Description: "Aprender a utilizar o gerenciamento de dependências",
+	},
+}
+
+var references = []Reference{
+	Reference{
+		StudyID: 1,
+		Url:     "https://golang.org/",
+	},
+	Reference{
+		StudyID: 1,
+		Url:     "https://golang.org/doc/code.html?h=tour",
 	},
 }

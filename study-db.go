@@ -11,6 +11,7 @@ type Study struct {
 	ScopeDefinition   string
 	SuccessDefinition string
 	LearningTopics    []LearningTopic
+	References        []Reference
 }
 
 func (db *DB) getStudy(ctx context.Context, studyID uint) (*Study, error) {
@@ -32,4 +33,16 @@ func (db *DB) getStudyLearningTopics(ctx context.Context, studyID uint) ([]Learn
 		return nil, err
 	}
 	return lt, nil
+}
+
+func (db *DB) getStudyReferences(ctx context.Context, studyID uint) ([]Reference, error) {
+	var s Study
+	var refs []Reference
+
+	s.ID = studyID
+	err := db.db.Model(&s).Association("References").Find(&refs).Error
+	if err != nil {
+		return nil, err
+	}
+	return refs, nil
 }
