@@ -2,11 +2,12 @@ package main
 
 import "context"
 
-type ReferenceResolver struct{}
+type ReferenceResolver struct {
+	model Reference
+}
 
 func (r *ReferenceResolver) Url(ctx context.Context) *string {
-	data := "açsldkfjaçslkdf.com"
-	return &data
+	return &r.model.Url
 }
 
 func (r *ReferenceResolver) Category(ctx context.Context) *ReferenceCategoryResolver {
