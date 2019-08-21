@@ -14,8 +14,8 @@ func NewDb(path string) (*DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	db.DropTableIfExists(&Study{}, &LearningTopic{}, &Reference{})
-	db.AutoMigrate(&Study{}, &LearningTopic{}, &Reference{})
+	db.DropTableIfExists(&Study{}, &LearningTopic{}, &Reference{}, &ReferenceCategory{})
+	db.AutoMigrate(&Study{}, &LearningTopic{}, &Reference{}, &ReferenceCategory{})
 	for _, v := range studies {
 		if err := db.Create(&v).Error; err != nil {
 			return nil, err
@@ -27,6 +27,11 @@ func NewDb(path string) (*DB, error) {
 		}
 	}
 	for _, v := range references {
+		if err := db.Create(&v).Error; err != nil {
+			return nil, err
+		}
+	}
+	for _, v := range categories {
 		if err := db.Create(&v).Error; err != nil {
 			return nil, err
 		}
@@ -61,11 +66,39 @@ var learningTopics = []LearningTopic{
 
 var references = []Reference{
 	Reference{
-		StudyID: 1,
-		Url:     "https://golang.org/",
+		StudyID:    1,
+		Url:        "https://golang.org/",
+		CategoryID: 2,
 	},
 	Reference{
-		StudyID: 1,
-		Url:     "https://golang.org/doc/code.html?h=tour",
+		StudyID:    1,
+		Url:        "https://golang.org/doc/code.html?h=tour",
+		CategoryID: 2,
+	},
+	Reference{
+		StudyID:    1,
+		Url:        "https://medium.com/trainingcenter/graphql-aprendendo-na-pr%C3%A1tica-569a6866065b",
+		CategoryID: 3,
+	},
+}
+
+var categories = []ReferenceCategory{
+	ReferenceCategory{
+		Name: "Mindmap",
+	},
+	ReferenceCategory{
+		Name: "Documentação oficial",
+	},
+	ReferenceCategory{
+		Name: "Blog posts",
+	},
+	ReferenceCategory{
+		Name: "Awesome lists",
+	},
+	ReferenceCategory{
+		Name: "Podcast",
+	},
+	ReferenceCategory{
+		Name: "Vídeo aulas",
 	},
 }
